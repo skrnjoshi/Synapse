@@ -52,7 +52,10 @@ const App = () => {
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
           <Route path="profiles" element={<Profiles />} />
-          <Route path="profile/:id" element={<Profile />} />
+          <Route
+            path="profile/:id"
+            element={<PrivateRoute component={Profile} />}
+          />
           <Route
             path="dashboard"
             element={<PrivateRoute component={Dashboard} />}

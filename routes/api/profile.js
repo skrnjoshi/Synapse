@@ -5,7 +5,7 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
 // bring in normalize to give us a proper url, regardless of what user entered
-const normalize = require("normalize-url");
+const normalize = require("normalize-url").default;
 const checkObjectId = require("../../middleware/checkObjectId");
 
 const Profile = require("../../models/Profile");
@@ -143,8 +143,8 @@ router.delete("/", auth, async (req, res) => {
     // Remove user
     await Promise.all([
       Post.deleteMany({ user: req.user.id }),
-      Profile.findOneAndRemove({ user: req.user.id }),
-      User.findOneAndRemove({ _id: req.user.id }),
+      Profile.findOneAndDelete({ user: req.user.id }),
+      User.findOneAndDelete({ _id: req.user.id }),
     ]);
 
     res.json({ msg: "User deleted" });
@@ -262,12 +262,22 @@ router.delete("/education/:edu_id", auth, async (req, res) => {
 // @access   Public
 router.get("/github/:username", async (req, res) => {
   try {
+    const githubClientId = config.get("githubClientId");
+    const githubSecret = config.get("githubSecret");
+
+    // Ensure these are defined
+    if (!githubClientId || !githubSecret) {
+      return res
+        .status(500)
+        .json({ msg: "GitHub Client ID or Secret not configured." });
+    }
+
     const uri = encodeURI(
-      `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`
+      `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc&client_id=${githubClientId}&client_secret=${githubSecret}`
     );
     const headers = {
       "user-agent": "node.js",
-      Authorization: `token ${config.get("githubToken")}`,
+      // No Authorization header with token needed here
     };
 
     const gitHubResponse = await axios.get(uri, { headers });

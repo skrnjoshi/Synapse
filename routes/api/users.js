@@ -38,7 +38,8 @@ router.post(
       }
 
       const avatar = normalize(
-        gravatar.url(email, {
+        gravatar.url(email.toLowerCase().trim(), {
+          // Add .toLowerCase().trim()
           s: "200",
           r: "pg",
           d: "mm",

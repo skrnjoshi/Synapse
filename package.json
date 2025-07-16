@@ -1,14 +1,17 @@
 {
-  "name": "Synapse",
+  "name": "synapse",
   "version": "1.0.0",
   "description": "Social network for developers",
   "main": "server.js",
   "scripts": {
-    "start": "node server",
+    "start": "node server.js",
     "server": "nodemon server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "build": "npm install --prefix client && npm run build --prefix client",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "render-build": "./render-build.sh",
+    "deploy": "npm run build && npm start"
   },
   "author": "Brad Traversy",
   "license": "MIT",
@@ -17,6 +20,7 @@
     "bcryptjs": "^2.4.3",
     "client": "file:client",
     "config": "^3.3.3",
+    "dotenv": "^17.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.8.1",
     "gravatar": "^1.8.1",
@@ -27,5 +31,9 @@
   "devDependencies": {
     "concurrently": "^5.3.0",
     "nodemon": "^2.0.6"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   }
 }

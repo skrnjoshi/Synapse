@@ -1,6 +1,5 @@
 const express = require("express");
 const axios = require("axios");
-const config = require("config");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
@@ -262,8 +261,8 @@ router.delete("/education/:edu_id", auth, async (req, res) => {
 // @access   Public
 router.get("/github/:username", async (req, res) => {
   try {
-    const githubClientId = config.get("githubClientId");
-    const githubSecret = config.get("githubSecret");
+    const githubClientId = process.env.GITHUB_CLIENT_ID;
+    const githubSecret = process.env.GITHUB_SECRET;
 
     // Ensure these are defined
     if (!githubClientId || !githubSecret) {

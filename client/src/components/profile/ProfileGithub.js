@@ -9,18 +9,18 @@ const ProfileGithub = ({ username, getGithubRepos, repos, reposLoading }) => {
   useEffect(() => {
     if (username) {
       setError(null);
-      
+
       // Clean the username if it's a full URL
       let cleanUsername = username;
-      if (username.includes('github.com/')) {
-        cleanUsername = username.split('github.com/')[1].split('/')[0];
+      if (username.includes("github.com/")) {
+        cleanUsername = username.split("github.com/")[1].split("/")[0];
       }
-      
+
       // Only proceed if we have a valid username
-      if (cleanUsername && cleanUsername.trim() !== '') {
+      if (cleanUsername && cleanUsername.trim() !== "") {
         getGithubRepos(cleanUsername);
       } else {
-        setError('Invalid GitHub username');
+        setError("Invalid GitHub username");
       }
     }
   }, [getGithubRepos, username]);
@@ -86,12 +86,12 @@ ProfileGithub.propTypes = {
   getGithubRepos: PropTypes.func.isRequired,
   repos: PropTypes.array.isRequired,
   username: PropTypes.string.isRequired,
-  reposLoading: PropTypes.bool
+  reposLoading: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
   repos: state.profile.repos,
-  reposLoading: state.profile.reposLoading
+  reposLoading: state.profile.reposLoading,
 });
 
 export default connect(mapStateToProps, { getGithubRepos })(ProfileGithub);

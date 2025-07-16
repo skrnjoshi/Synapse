@@ -6,8 +6,8 @@ import {
   GET_PROFILES,
   GET_REPOS,
   NO_REPOS,
-  REPOS_LOADING
-} from '../actions/types';
+  REPOS_LOADING,
+} from "../actions/types";
 
 const initialState = {
   profile: null,
@@ -15,7 +15,7 @@ const initialState = {
   repos: [],
   loading: true,
   reposLoading: false,
-  error: {}
+  error: {},
 };
 
 function profileReducer(state = initialState, action) {
@@ -27,44 +27,44 @@ function profileReducer(state = initialState, action) {
       return {
         ...state,
         profile: payload,
-        loading: false
+        loading: false,
       };
     case GET_PROFILES:
       return {
         ...state,
         profiles: payload,
-        loading: false
+        loading: false,
       };
     case PROFILE_ERROR:
       return {
         ...state,
         error: payload,
         loading: false,
-        profile: null
+        profile: null,
       };
     case CLEAR_PROFILE:
       return {
         ...state,
         profile: null,
         repos: [],
-        reposLoading: false
+        reposLoading: false,
       };
     case REPOS_LOADING:
       return {
         ...state,
-        reposLoading: true
+        reposLoading: true,
       };
     case GET_REPOS:
       return {
         ...state,
         repos: payload,
-        reposLoading: false
+        reposLoading: false,
       };
     case NO_REPOS:
       return {
         ...state,
         repos: [],
-        reposLoading: false
+        reposLoading: false,
       };
     default:
       return state;

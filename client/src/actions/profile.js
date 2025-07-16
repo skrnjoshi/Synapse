@@ -9,7 +9,8 @@ import {
   CLEAR_PROFILE,
   ACCOUNT_DELETED,
   GET_REPOS,
-  NO_REPOS
+  NO_REPOS,
+  REPOS_LOADING
 } from './types';
 
 /*
@@ -75,6 +76,8 @@ export const getProfileById = (userId) => async (dispatch) => {
 // Get Github repos
 export const getGithubRepos = (username) => async (dispatch) => {
   try {
+    dispatch({ type: REPOS_LOADING });
+    
     const res = await api.get(`/profile/github/${username}`);
 
     dispatch({

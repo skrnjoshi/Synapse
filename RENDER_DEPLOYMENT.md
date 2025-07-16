@@ -5,6 +5,7 @@
 ### 1. Repository Preparation
 
 Make sure your code is pushed to GitHub:
+
 ```bash
 git add .
 git commit -m "Prepare for Render deployment"
@@ -19,6 +20,7 @@ git push origin main
 4. Configure the service:
 
    **Basic Settings:**
+
    - Name: `devconnector` (or your preferred name)
    - Root Directory: `.` (leave empty)
    - Environment: `Node`
@@ -26,6 +28,7 @@ git push origin main
    - Branch: `main`
 
    **Build & Deploy:**
+
    - Build Command: `./render-build.sh`
    - Start Command: `node server.js`
 
@@ -43,6 +46,7 @@ PORT=10000
 ```
 
 **Important Notes:**
+
 - Use MongoDB Atlas for production database
 - Generate a strong JWT_SECRET (use: `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"`)
 - Create GitHub OAuth app with your Render domain
@@ -83,16 +87,19 @@ PORT=10000
 ### Common Issues:
 
 1. **Build Fails:**
+
    - Check build logs for missing dependencies
    - Ensure `render-build.sh` is executable
    - Verify Node.js version compatibility
 
 2. **Database Connection:**
+
    - Verify MONGO_URI is correct
    - Check MongoDB Atlas IP whitelist
    - Ensure database user has proper permissions
 
 3. **Environment Variables:**
+
    - Double-check all required env vars are set
    - JWT_SECRET should be strong and unique
    - GitHub OAuth URLs should match your domain

@@ -4,7 +4,7 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
 // bring in normalize to give us a proper url, regardless of what user entered
-const normalize = require("normalize-url").default;
+const normalize = require("normalize-url");
 const checkObjectId = require("../../middleware/checkObjectId");
 
 const Profile = require("../../models/Profile");
@@ -67,7 +67,7 @@ router.post(
           : "",
       skills: Array.isArray(skills)
         ? skills
-        : skills.split(",").map((skill) => " " + skill.trim()),
+        : skills.split(",").map((skill) => skill.trim()),
       ...rest,
     };
 
@@ -173,6 +173,10 @@ router.put(
     try {
       const profile = await Profile.findOne({ user: req.user.id });
 
+      if (!profile) {
+        return res.status(400).json({ msg: "Profile not found" });
+      }
+
       profile.experience.unshift(req.body);
 
       await profile.save();
@@ -225,6 +229,10 @@ router.put(
 
     try {
       const profile = await Profile.findOne({ user: req.user.id });
+
+      if (!profile) {
+        return res.status(400).json({ msg: "Profile not found" });
+      }
 
       profile.education.unshift(req.body);
 

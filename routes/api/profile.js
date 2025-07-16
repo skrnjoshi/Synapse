@@ -269,29 +269,31 @@ router.delete("/education/:edu_id", auth, async (req, res) => {
 // @access   Public
 router.get("/github/:username", async (req, res) => {
   try {
-    const githubClientId = process.env.GITHUB_CLIENT_ID;
-    const githubSecret = process.env.GITHUB_SECRET;
-
-    // Ensure these are defined
-    if (!githubClientId || !githubSecret) {
-      return res
-        .status(500)
-        .json({ msg: "GitHub Client ID or Secret not configured." });
+    // Extract username from URL if it's a full GitHub URL
+    let username = req.params.username;
+    if (username.includes("github.com/")) {
+      username = username.split("github.com/")[1].split("/")[0];
     }
 
-    const uri = encodeURI(
-      `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc&client_id=${githubClientId}&client_secret=${githubSecret}`
-    );
+    // Remove any extra slashes or path segments
+    username = username.split("/")[0];
+
+    const uri = `https://api.github.com/users/${username}/repos?per_page=5&sort=created:desc`;
     const headers = {
-      "user-agent": "node.js",
-      // No Authorization header with token needed here
+      "user-agent": "DevConnector-App",
     };
 
     const gitHubResponse = await axios.get(uri, { headers });
     return res.json(gitHubResponse.data);
   } catch (err) {
-    console.error(err.message);
-    return res.status(404).json({ msg: "No Github profile found" });
+    console.error("GitHub API Error:", err.response?.data || err.message);
+    if (err.response && err.response.status === 404) {
+      return res.status(404).json({ msg: "GitHub user not found" });
+    }
+    if (err.response && err.response.status === 403) {
+      return res.status(403).json({ msg: "GitHub API rate limit exceeded" });
+    }
+    return res.status(500).json({ msg: "GitHub API error" });
   }
 });
 

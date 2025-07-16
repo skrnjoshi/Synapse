@@ -7,9 +7,9 @@ import formatDate from '../../utils/formatDate';
 const Education = ({ education, deleteEducation }) => {
   const educations = education.map((edu) => (
     <tr key={edu._id}>
-      <td>{edu.school}</td>
-      <td className="hide-sm">{edu.degree}</td>
-      <td>
+      <td data-label="School">{edu.school}</td>
+      <td className="hide-sm" data-label="Degree">{edu.degree}</td>
+      <td data-label="Years">
         {formatDate(edu.from)} - {edu.to ? formatDate(edu.to) : 'Now'}
       </td>
       <td>
@@ -26,17 +26,19 @@ const Education = ({ education, deleteEducation }) => {
   return (
     <Fragment>
       <h2 className="my-2">Education Credentials</h2>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>School</th>
-            <th className="hide-sm">Degree</th>
-            <th className="hide-sm">Years</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>{educations}</tbody>
-      </table>
+      <div className="table-container">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>School</th>
+              <th className="hide-sm">Degree</th>
+              <th className="hide-sm">Years</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>{educations}</tbody>
+        </table>
+      </div>
     </Fragment>
   );
 };

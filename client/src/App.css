@@ -574,6 +574,97 @@ button {
   .post button {
     padding: 0.3rem 0.4rem;
   }
+
+  /* Dashboard Tables - Mobile Responsive */
+  .table {
+    font-size: 0.8rem;
+  }
+
+  /* Make table scrollable on mobile */
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ensure delete button is always visible and properly sized */
+  .table td:last-child {
+    min-width: 80px;
+    text-align: center;
+  }
+
+  .table .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  /* Alternative: Stack table data vertically on very small screens */
+  @media (max-width: 480px) {
+    .table, .table thead, .table tbody, .table th, .table td, .table tr {
+      display: block;
+    }
+
+    .table thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+
+    .table tr {
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      padding: 10px;
+      background: #f9f9f9;
+      border-radius: 5px;
+    }
+
+    .table td {
+      border: none;
+      position: relative;
+      padding-left: 50% !important;
+      padding-right: 10px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    .table td:before {
+      content: attr(data-label) ": ";
+      position: absolute;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .table td:last-child {
+      text-align: right;
+      padding-left: 10px !important;
+    }
+
+    .table td:last-child:before {
+      content: "";
+    }
+  }
+
+  /* Post Items - Better mobile layout */
+  .post > div:last-child {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .post .btn {
+    flex: 0 0 auto;
+    margin: 0.2rem 0;
+  }
+
+  /* Ensure buttons don't get too small */
+  .post .btn {
+    min-width: 80px;
+  }
 }
 
 .alert-wrapper {
